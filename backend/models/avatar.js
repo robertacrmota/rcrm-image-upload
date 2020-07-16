@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 
-/**
- *  This is a temporary model for testing image upload
- */
 const avatarschema = new mongoose.Schema({
     fieldname: String,
     originalname: String,
