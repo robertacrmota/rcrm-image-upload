@@ -17,6 +17,17 @@ app.use(bodyParser.json())
 
 const Avatar = require('./models/avatar');
 
+const MONGODB_URI ='mongodb://localhost:27017/avatar-db';
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(()=> console.log("connected to URL " + MONGODB_URI))
+.catch((err) => console.log("Error on db connection: " + err.message));
+
+// --------------------------------------------------------------------
+// ROUTES
+// --------------------------------------------------------------------
 
 app.get('/',  (req, res) => res.send('Hello World!'));
 
