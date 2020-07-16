@@ -24,6 +24,9 @@ mongoose.connect(MONGODB_URI, {
 .then(()=> console.log("connected to URL " + MONGODB_URI))
 .catch((err) => console.log("Error on db connection: " + err.message));
 
+const resetdb = require('./reset-db');
+resetdb();
+
 // --------------------------------------------------------------------
 // ROUTES
 // --------------------------------------------------------------------
