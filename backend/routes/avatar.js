@@ -12,16 +12,19 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
     await Avatar.create(newAvatar)
         .then((resolve) => {
-        console.log(`STATUS :: Success. New avatar created.`);
-
-        res.set('Content-Type', newAvatar.mimetype);
-        res.status(201).send(newAvatar.buffer);
+            console.log(`STATUS :: Success`);
+            res.status(201).send({name: newAvatar.originalname,
+                                mimetype: newAvatar.mimetype,
+                                buffer: newAvatar.buffer
+            });
         })
         .catch((e) => {
-            console.error(`STATUS :: Ops.Something went wrong.`);
-
-            res.status(500).json({ error: true, message: e.toString()});
-        });
+        console.error(`STATUS :: Ops.Something went wrong.`);
+            res.status(500).json({
+                error: true,
+                message: e.toString()
+            });
+    });
 });
 
 module.exports = router;
