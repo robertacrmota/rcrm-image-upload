@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 
 function App() {
-  const [avatar, setAvatar] = useState('');
+  const [avatars, setAvatars] = useState([]);
 
   const handleSubmit = file => {
   
@@ -25,7 +25,7 @@ function App() {
       // console.log(result);
       const dataURL = encodeImage(result.data.mimetype, result.data.buffer.data);
       // console.log(dataURL);
-      setAvatar(dataURL);
+      setAvatars([...avatars, {name: result.data.name, url: dataURL}]);
     }
 
     uploadImage();
@@ -33,11 +33,11 @@ function App() {
 
   return (
     <div>
-      <h1>Upload an image to the server</h1>
+      <h1>Upload to server</h1>
       <form encType="multipart/form-data"> 
               <input type="file" name="avatar" onChange={e => handleSubmit(e.target.files[0])}/>
       </form>
-      {avatar ? <img src={avatar} width="400" height="300"/> : undefined}
+      {avatars.map((avatar, idx) => <img key={`${avatar.name}-${idx}`} src={avatar.url} width="40" height="30"/> )}
     </div>
   );
 }
