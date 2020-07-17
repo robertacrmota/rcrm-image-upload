@@ -6,6 +6,22 @@ function App() {
 
   const handleSubmit = evt => {
     evt.preventDefault();
+    uploadImage();
+
+    async function uploadImage() {
+      const file = evt.target.files[0];
+
+      const data = new FormData();
+      data.append('file', file);
+      data.append('filename', file.name);
+
+      // POST request
+      const result = await axios.post('http://localhost:3000/upload', data, { 
+                                        headers: { 'Content-Type': 'multipart/form-data'}
+      });
+
+      console.log(result);
+    }
   };
 
   return (
