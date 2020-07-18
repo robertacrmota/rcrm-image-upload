@@ -46,6 +46,9 @@ const useStyles = makeStyles(theme => createStyles({
         width: '0'
     }
   },
+  containerUploadHover: {
+    backgroundColor: theme.palette.secondary.light,
+  },
   containerGrid: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -53,13 +56,14 @@ const useStyles = makeStyles(theme => createStyles({
       width:'200px',
       height: '150px',
       margin: '15px 20px 15px 0',
-      borderRadius: '5px'
+      borderRadius: '3px'
     }
-  }
+  },
 }));
 
 function App() {
   const [avatars, setAvatars] = useState([]);
+  const [isDragOver, setDragOver] = useState(false);
   const classes = useStyles();
 
   const handleSubmit = file => {
@@ -93,11 +97,14 @@ function App() {
     evt.stopPropagation();
     evt.preventDefault();
     
+    setDragOver(true);
   };
 
   const handleDrop = evt => {
     evt.stopPropagation();
     evt.preventDefault();
+
+    setDragOver(false);
 
     const file = evt.dataTransfer.files[0];
     handleSubmit(file);
@@ -106,7 +113,7 @@ function App() {
   return (
     <Container maxWidth="lg" className={classes.root}>
       <section id="image-upload" 
-               className={`${classes.container} ${classes.containerUpload}`}
+               className={`${classes.container} ${classes.containerUpload} ${isDragOver ? classes.containerUploadHover : ''}`}
                onDragOver={evt => handleDragOver(evt)}
                onDrop={handleDrop}>
             <i className="fas fa-cloud-upload-alt fa-5x"></i>
