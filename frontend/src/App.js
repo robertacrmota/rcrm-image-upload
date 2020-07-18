@@ -63,7 +63,7 @@ function App() {
   const classes = useStyles();
 
   const handleSubmit = file => {
-  
+
     const encodeImage = (mimetype, arrayBuffer) => {
         let u8 = new Uint8Array(arrayBuffer)
         const b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer),function(p,c){return p+String.fromCharCode(c)},''))
@@ -89,9 +89,26 @@ function App() {
     uploadImage();
   };
 
+  const handleDragOver = evt => {
+    evt.stopPropagation();
+    evt.preventDefault();
+    
+  };
+
+  const handleDrop = evt => {
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    const file = evt.dataTransfer.files[0];
+    handleSubmit(file);
+  };
+
   return (
     <Container maxWidth="lg" className={classes.root}>
-      <section id="image-upload" className={`${classes.container} ${classes.containerUpload}`}>
+      <section id="image-upload" 
+               className={`${classes.container} ${classes.containerUpload}`}
+               onDragOver={evt => handleDragOver(evt)}
+               onDrop={handleDrop}>
             <i className="fas fa-cloud-upload-alt fa-5x"></i>
             <label>
                 <input type="file" name="avatar" onChange={e => handleSubmit(e.target.files[0])}/>
